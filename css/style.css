@@ -1,7 +1,10 @@
-/* c0cffa */
+
+/* black color : #3776a1
+white color : #89cff1
+highlight color : #5293bb */
 
 body{
-    background-color: #9daddf;
+    background-color: #6eb1d6;
     background: linear-gradient(to bottom, #957fef, #cfa0fa);
     margin: 0;
 }
@@ -27,20 +30,16 @@ body{
     height: 100vh;
 }
 
-.files:nth-of-type(odd) .box:nth-of-type(even){
-    background-color: #7e38b7;
+.black {
+    background-color: #3776a1;
 }
 
-.files:nth-of-type(odd) .box:nth-of-type(odd) {
-    background-color: #99cced;
+.white {
+    background-color: #89cff1;
 }
 
-.files:nth-of-type(even) .box:nth-of-type(odd){
-    background-color: #7e38b7;
-}
-
-.files:nth-of-type(even) .box:nth-of-type(even) {
-    background-color: #99cced;
+.highlight {
+    background-color: #5293bb;
 }
 
 

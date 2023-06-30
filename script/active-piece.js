@@ -13,7 +13,7 @@ for(const x of all_box) {
         }
 
         if(innerHTML.includes('pieces')){
-            document.getElementById(activeID).style.backgroundColor = '#9c89ff';
+            document.getElementById(activeID).style.backgroundColor = '#5293bb';
             selectedElemet.push(x);
             // console.log(activeID);
         }
