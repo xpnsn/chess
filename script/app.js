@@ -1,4 +1,4 @@
-const gameBoard=[];
+const gameBoard=document.querySelector('.container');
 
 const initialBoard = [
     brook, bknight, bbishop, bqueen, bking, bbishop, bknight, brook,
@@ -7,17 +7,38 @@ const initialBoard = [
     '', '', '', '', '', '', '', '', 
     '', '', '', '', '', '', '', '', 
     '', '', '', '', '', '', '', '', 
-    wpawn, wpawn, wpawn, wpawn, wpawn, bpawn, wpawn, wpawn, 
+    wpawn, wpawn, wpawn, wpawn, wpawn, wpawn, wpawn, wpawn, 
     wrook, wknight, wbishop, wqueen, wking, wbishop, wknight, wrook
 ]
 
+const boxId=[];
+
+for(let i=8; i>0; i--) {
+    for(let j=97; j<105; j++) {
+        boxId.push(String.fromCharCode(j)+i);
+    }
+}
+
+console.log()
+
 // console.log(initialBoard);
+let y=0;
 
 function createBoard() {
-    initialBoard.forEach(()=>{
+    initialBoard.forEach((x, i)=>{
         const square = document.createElement('div');
         square.classList.add('box');
-        square.classList.add('black');
+        square.innerHTML = x;
+        if(y%2 === 0) {
+            square.classList.add('white');
+        } else {
+            square.classList.add('black');
+        }
+        y++;
+        if((i+1)%8 === 0) {
+            y++;
+        }
+        square.setAttribute("id", boxId[i]);
         gameBoard.append(square);
     })
 }
