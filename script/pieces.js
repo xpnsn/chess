@@ -1,0 +1,1 @@
+const rook = <div class="pieces" id="rook"> <img src="../img/"> </img></div>
