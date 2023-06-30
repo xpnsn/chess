@@ -1,1 +1,12 @@
-const rook = <div class="pieces" id="rook"> <img src="../img/"> </img></div>
+const brook = `<div class="pieces" id="brook"> <img src="../img/pieces/black/rook.svg"> </img></div>`;
+const bbishop = `<div class="pieces" id="bbishop"> <img src="../img/pieces/black/bishop.svg"> </img></div>`;
+const bknight = `<div class="pieces" id="bknight"> <img src="../img/pieces/black/knight.svg"> </img></div>`;
+const bqueen = `<div class="pieces" id="bqueen"> <img src="../img/pieces/black/queen.svg"> </img></div>`;
+const bking = `<div class="pieces" id="bking"> <img src="../img/pieces/black/king.svg"> </img></div>`;
+const bpawn = `<div class="pieces" id="bpawn"> <img src="../img/pieces/black/pawn.svg"> </img></div>`;
+const wrook = `<div class="pieces" id="wrook"> <img src="../img/pieces/white/rook.svg"> </img></div>`;
+const wbishop = `<div class="pieces" id="wbishop"> <img src="../img/pieces/white/bishop.svg"> </img></div>`;
+const wknight = `<div class="pieces" id="wknight"> <img src="../img/pieces/white/knight.svg"> </img></div>`;
+const wqueen = `<div class="pieces" id="wqueen"> <img src="../img/pieces/white/queen.svg"> </img></div>`;
+const wking = `<div class="pieces" id="wking"> <img src="../img/pieces/white/king.svg"> </img></div>`;
+const wpawn = `<div class="pieces" id="wpawn"> <img src="../img/pieces/white/pawn.svg"> </img></div>`;
