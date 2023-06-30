@@ -1,3 +1,5 @@
+const gameBoard=[];
+
 const initialBoard = [
     brook, bknight, bbishop, bqueen, bking, bbishop, bknight, brook,
     bpawn, bpawn, bpawn, bpawn, bpawn, bpawn, bpawn, bpawn, 
@@ -12,5 +14,12 @@ const initialBoard = [
 // console.log(initialBoard);
 
 function createBoard() {
-    star
+    initialBoard.forEach(()=>{
+        const square = document.createElement('div');
+        square.classList.add('box');
+        square.classList.add('black');
+        gameBoard.append(square);
+    })
 }
+
+createBoard();
