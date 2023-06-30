@@ -38,6 +38,9 @@ function createBoard() {
         if((i+1)%8 === 0) {
             y++;
         }
+        if(x != ''){
+            square.setAttribute('draggable', true)
+        }
         square.setAttribute("id", boxId[i]);
         gameBoard.append(square);
     })
