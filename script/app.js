@@ -19,7 +19,6 @@ for(let i=8; i>0; i--) {
     }
 }
 
-console.log()
 
 // console.log(initialBoard);
 let y=0;
@@ -39,11 +38,40 @@ function createBoard() {
             y++;
         }
         if(x != ''){
-            square.setAttribute('draggable', true)
+            square.firstChild.setAttribute('draggable', true)
         }
         square.setAttribute("id", boxId[i]);
         gameBoard.append(square);
     })
 }
-
 createBoard();
+
+const allBox = document.querySelectorAll('.container .box');
+
+// console.log(allBox);
+
+allBox.forEach(ele => {
+    ele.addEventListener('dragstart', dragStart);
+    ele.addEventListener('dragover', dragOver);
+    ele.addEventListener('drop', dragDrop);
+});
+
+let startID;
+let draggedEle;
+
+function dragStart(i) {
+    startID = i.target.parentNode.parentNode.id;
+    draggedEle = i.target.parentNode;
+    console.log(startID)
+    console.log(draggedEle)
+}
+
+function dragOver(i) {
+    i.preventDefault();
+}
+
+function dragDrop(i) {
+    i.stopPropagation()
+    console.log(i.target);
+    i.target.append(draggedEle);
+}

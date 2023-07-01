@@ -11,6 +11,7 @@ body{
 .box{
     height: 80px;
     width: 80px;
+    /* position: relative; */
 }
 
 .container{
@@ -43,8 +44,22 @@ body{
 }
 
 
-img{
+.box img{
     width: 100%;
+    position: relative;
+    /* z-index: -1; */
+}
+
+path{
+    position: relative;
+    z-index: -2;
+}
+
+.piece {
+    height: 80px;
+    width: 80px;
+    position: relative;
+    z-index: 1;
 }
 
 .flex {
