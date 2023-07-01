@@ -1,4 +1,6 @@
 const gameBoard=document.querySelector('.container');
+const currentPlayer = 'white';
+
 
 const initialBoard = [
     brook, bknight, bbishop, bqueen, bking, bbishop, bknight, brook,
@@ -38,7 +40,7 @@ function createBoard() {
             y++;
         }
         if(x != ''){
-            square.firstChild.setAttribute('draggable', true)
+            square.firstChild.setAttribute('draggable', true);
         }
         square.setAttribute("id", boxId[i]);
         gameBoard.append(square);
@@ -46,11 +48,12 @@ function createBoard() {
 }
 createBoard();
 
-const allBox = document.querySelectorAll('.container .box');
+const allBox = document.querySelectorAll('.box');
 
-// console.log(allBox);
+console.log(allBox);
 
 allBox.forEach(ele => {
+    // console.log(ele)
     ele.addEventListener('dragstart', dragStart);
     ele.addEventListener('dragover', dragOver);
     ele.addEventListener('drop', dragDrop);
@@ -60,8 +63,10 @@ let startID;
 let draggedEle;
 
 function dragStart(i) {
-    startID = i.target.parentNode.parentNode.id;
-    draggedEle = i.target.parentNode;
+    console.log(i);
+    // i.dataTransfer.setData('text/plain', pieceId);
+    startID = i.target.parentNode.id;
+    draggedEle = i.target;
     console.log(startID)
     console.log(draggedEle)
 }
@@ -71,7 +76,17 @@ function dragOver(i) {
 }
 
 function dragDrop(i) {
-    i.stopPropagation()
+    i.stopPropagation();
+    const taken = e.target.classList.contains('pieces');
     console.log(i.target);
-    i.target.append(draggedEle);
+    changePlayer();
+    // i.target.append(draggedEle);
+}
+
+function changePlayer() {
+    if(currentPlayer === "white") {
+        currentPlayer = "black";
+    } else {
+        currentPlayer === "white";
+    }
 }
