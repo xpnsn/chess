@@ -32,11 +32,11 @@ body{
     height: 100vh;
 }
 
-.black {
+.dark-square {
     background-color: #3776a1;
 }
 
-.white {
+.light-square {
     background-color: #89cff1;
 }
 

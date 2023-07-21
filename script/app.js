@@ -1,5 +1,5 @@
 const gameBoard=document.querySelector('.container');
-const currentPlayer = 'white';
+let currentPlayer = 'white';
 
 
 const initialBoard = [
@@ -31,9 +31,9 @@ function createBoard() {
         square.classList.add('box');
         square.innerHTML = x;
         if(y%2 === 0) {
-            square.classList.add('white');
+            square.classList.add('light-square');
         } else {
-            square.classList.add('black');
+            square.classList.add('dark-square');
         }
         y++;
         if((i+1)%8 === 0) {
@@ -50,7 +50,7 @@ createBoard();
 
 const allBox = document.querySelectorAll('.box');
 
-console.log(allBox);
+// console.log(allBox);
 
 allBox.forEach(ele => {
     // console.log(ele)
@@ -63,12 +63,14 @@ let startID;
 let draggedEle;
 
 function dragStart(i) {
-    console.log(i);
+    // console.log(i);
     // i.dataTransfer.setData('text/plain', pieceId);
     startID = i.target.parentNode.id;
     draggedEle = i.target;
-    console.log(startID)
-    console.log(draggedEle)
+
+
+    // console.log(startID)
+    // console.log(draggedEle)
 }
 
 function dragOver(i) {
@@ -77,10 +79,23 @@ function dragOver(i) {
 
 function dragDrop(i) {
     i.stopPropagation();
-    const taken = e.target.classList.contains('pieces');
-    console.log(i.target);
+
+    i.target.append(draggedEle);
+    
+    const taken = i.target.classList.contains('pieces');
+    const correctMove = i.target.firstChild.classList.contains(currentPlayer);
+    const opponentGo = currentPlayer === 'white' ? 'black' : 'white';
+    const takenByOpponent = i.target.firstChild.classList.contains(opponentGo);
+    
+    if(correctMove) {
+        if(takenByOpponent) {
+
+        }
+    }
+
+    console.log(opponentGo);
     changePlayer();
-    // i.target.append(draggedEle);
+    console.log(i.target.firstChild);
 }
 
 function changePlayer() {
