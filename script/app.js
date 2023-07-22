@@ -1,5 +1,5 @@
 const gameBoard=document.querySelector('.container');
-let currentPlayer = 'white';
+let currentPlayer = "white";
 
 
 const initialBoard = [
@@ -63,7 +63,7 @@ let startID;
 let draggedEle;
 
 function dragStart(i) {
-    // console.log(i);
+    console.log(i.target);
     // i.dataTransfer.setData('text/plain', pieceId);
     startID = i.target.parentNode.id;
     draggedEle = i.target;
@@ -80,28 +80,35 @@ function dragOver(i) {
 function dragDrop(i) {
     i.stopPropagation();
 
-    i.target.append(draggedEle);
-    
     const taken = i.target.classList.contains('pieces');
-    const correctMove = i.target.firstChild.classList.contains(currentPlayer);
-    const opponentGo = currentPlayer === 'white' ? 'black' : 'white';
-    const takenByOpponent = i.target.firstChild.classList.contains(opponentGo);
+    const correctMove = draggedEle?.classList.contains(currentPlayer);
+    const opponent = currentPlayer === 'white' ? 'black' : 'white';
+    const takenByOpponent = i.target?.classList.contains(opponent);
+
+    if(taken && !takenByOpponent) {
+        draggedEle.classList.add('shake')
+        setTimeout(() => {
+            draggedEle.classList.remove('shake')
+        }, 300);
+    }
     
     if(correctMove) {
         if(takenByOpponent) {
-
+            i.target.parentNode.append(draggedEle);
+            i.target.remove();
+        } else {
+            i.target.append(draggedEle)
+            
         }
     }
 
-    console.log(opponentGo);
     changePlayer();
-    console.log(i.target.firstChild);
 }
 
 function changePlayer() {
-    if(currentPlayer === "white") {
-        currentPlayer = "black";
+    if(currentPlayer === "black") {
+        currentPlayer = "white";
     } else {
-        currentPlayer === "white";
+        currentPlayer = "black";
     }
 }
