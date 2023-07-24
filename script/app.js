@@ -65,7 +65,7 @@ let draggedEle;
 function dragStart(i) {
     console.log(i.target);
     // i.dataTransfer.setData('text/plain', pieceId);
-    startID = i.target.parentNode.id;
+    startID = Number(i.target.parentNode.id);
     draggedEle = i.target;
 
 
@@ -84,6 +84,7 @@ function dragDrop(i) {
     const correctMove = draggedEle?.classList.contains(currentPlayer);
     const opponent = currentPlayer === 'white' ? 'black' : 'white';
     const takenByOpponent = i.target?.classList.contains(opponent);
+    const valid = isValidMove(i.target);
 
     if(taken && !takenByOpponent) {
         draggedEle.classList.add('shake')
@@ -98,7 +99,7 @@ function dragDrop(i) {
             i.target.remove();
             changePlayer();
         } else if (taken){
-        } else {
+        } else if(isValidMove) {
             i.target.append(draggedEle);  
             changePlayer();
         }
@@ -106,12 +107,29 @@ function dragDrop(i) {
 
 }
 
-function isValidMove(target)
-
 function changePlayer() {
     if(currentPlayer === "black") {
         currentPlayer = "white";
     } else {
         currentPlayer = "black";
     }
+}
+
+function isValidMove(target) {
+    const endId = Number(target.getAttribute('id')) || Number(target.parentNode.getAttribute('id'));
+    console.log(endId)
+    const piece = draggedEle.getAttribute('piece');
+    
+
+    switch(piece) {
+
+        case 'pawn' :
+            const startingRank = [2,7];
+            if(startingRank.includes(startID[1]))
+            console('valid mobe');
+            break;
+
+    }
+
+
 }
