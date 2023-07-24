@@ -96,14 +96,17 @@ function dragDrop(i) {
         if(takenByOpponent) {
             i.target.parentNode.append(draggedEle);
             i.target.remove();
+            changePlayer();
+        } else if (taken){
         } else {
-            i.target.append(draggedEle)
-            
+            i.target.append(draggedEle);  
+            changePlayer();
         }
     }
 
-    changePlayer();
 }
+
+function isValidMove(target)
 
 function changePlayer() {
     if(currentPlayer === "black") {
