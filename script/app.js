@@ -137,8 +137,8 @@ function isValidMove(target) {
             if(draggedEle.classList.contains('white')) {
 
                 if(
-                    (startingRank.includes(Number(startID[1])) && startID.charCodeAt(0) === endId.charCodeAt(0) && (Number(endId[1]) === Number(startID[1])+1 || Number(endId[1]) === Number(startID[1])+2)) || 
-                    (Number(endId[1]) === Number(startID[1])+1 && startID.charCodeAt(0) === endId.charCodeAt(0)) || 
+                    (startingRank.includes(Number(startID[1])) && startID.charCodeAt(0) === endId.charCodeAt(0) && target.classList.contains('box') && (Number(endId[1]) === Number(startID[1])+1 || Number(endId[1]) === Number(startID[1])+2)) || 
+                    (Number(endId[1]) === Number(startID[1])+1 && startID.charCodeAt(0) === endId.charCodeAt(0) && target.classList.contains('box')) || 
                     (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)+1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])+1) || 
                     (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)-1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])+1)
                 ) {
@@ -150,8 +150,8 @@ function isValidMove(target) {
             } else if (draggedEle.classList.contains('black')) {
 
                 if(
-                    (startingRank.includes(Number(startID[1])) && startID.charCodeAt(0) === endId.charCodeAt(0) && (Number(endId[1]) === Number(startID[1])-1 || Number(endId[1]) === Number(startID[1])-2)) || 
-                    (Number(endId[1]) === Number(startID[1])-1 && startID.charCodeAt(0) === endId.charCodeAt(0)) ||
+                    (startingRank.includes(Number(startID[1])) && startID.charCodeAt(0) === endId.charCodeAt(0) && target.classList.contains('box') && (Number(endId[1]) === Number(startID[1])-1 || Number(endId[1]) === Number(startID[1])-2)) || 
+                    (Number(endId[1]) === Number(startID[1])-1 && startID.charCodeAt(0) === endId.charCodeAt(0)  && target.classList.contains('box')) ||
                     (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)+1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])-1) || 
                     (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)-1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])-1)
                 ) {
@@ -163,5 +163,68 @@ function isValidMove(target) {
             }
             break;
 
+        case 'knight' :
+            if(
+                (startID.charCodeAt(0)+2 === endId.charCodeAt(0) && Number(endId[1])+1 === Number(startID[1])) ||
+                (startID.charCodeAt(0)+2 === endId.charCodeAt(0) && Number(endId[1])-1 === Number(startID[1])) ||
+                (startID.charCodeAt(0)-2 === endId.charCodeAt(0) && Number(endId[1])+1 === Number(startID[1])) ||
+                (startID.charCodeAt(0)-2 === endId.charCodeAt(0) && Number(endId[1])-1 === Number(startID[1])) ||
+                (Number(startID[1])+2 === Number(endId[1]) && startID.charCodeAt(0)+1 === endId.charCodeAt(0)) ||
+                (Number(startID[1])+2 === Number(endId[1]) && startID.charCodeAt(0)-1 === endId.charCodeAt(0)) ||
+                (Number(startID[1])-2 === Number(endId[1]) && startID.charCodeAt(0)+1 === endId.charCodeAt(0)) ||
+                (Number(startID[1])-2 === Number(endId[1]) && startID.charCodeAt(0)-1 === endId.charCodeAt(0)) 
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+            break;
+
+        case 'bishop' :
+            if(bishopMove) {
+                return true;
+            } else {
+                return false;
+            }
+
+    }
+}
+
+const bishopMove = function(startID, endId) {
+    for(let i=1; i<8; i++) {
+        if(
+            (startID.charCodeAt(0)+(1*i) === endId.charCodeAt(0) && Number(startID[1])+(1*i) === Number(endId[1]))
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    for(let i=1; i<8; i++) {
+        if(
+            (startID.charCodeAt(0)-(1*i) === endId.charCodeAt(0) && Number(startID[1])+(1*i) === Number(endId[1]))
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    for(let i=1; i<8; i++) {
+        if(
+            (startID.charCodeAt(0)+(1*i) === endId.charCodeAt(0) && Number(startID[1])-(1*i) === Number(endId[1]))
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    for(let i=1; i<8; i++) {
+        if(
+            (startID.charCodeAt(0)-(1*i) === endId.charCodeAt(0) && Number(startID[1])-(1*i) === Number(endId[1])) 
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
