@@ -63,9 +63,9 @@ let startID;
 let draggedEle;
 
 function dragStart(i) {
-    console.log(i.target);
+    // console.log(i.target);
     // i.dataTransfer.setData('text/plain', pieceId);
-    startID = Number(i.target.parentNode.id);
+    startID = i.target.parentNode.id;
     draggedEle = i.target;
 
 
@@ -84,27 +84,33 @@ function dragDrop(i) {
     const correctMove = draggedEle?.classList.contains(currentPlayer);
     const opponent = currentPlayer === 'white' ? 'black' : 'white';
     const takenByOpponent = i.target?.classList.contains(opponent);
+
     const valid = isValidMove(i.target);
 
-    if(taken && !takenByOpponent) {
+    if(taken && !takenByOpponent && (!valid || !correctMove)) {
         draggedEle.classList.add('shake')
         setTimeout(() => {
             draggedEle.classList.remove('shake')
         }, 300);
     }
     
-    if(correctMove) {
+    if(correctMove && valid)  {
         if(takenByOpponent) {
+            
             i.target.parentNode.append(draggedEle);
             i.target.remove();
             changePlayer();
-        } else if (taken){
-        } else if(isValidMove) {
-            i.target.append(draggedEle);  
-            changePlayer();
-        }
-    }
+            
+        } else if(i.target.classList.contains('box')){
 
+            i.target.append(draggedEle);
+            changePlayer();
+    
+        }
+        else if (taken){
+        } 
+
+    }
 }
 
 function changePlayer() {
@@ -116,20 +122,46 @@ function changePlayer() {
 }
 
 function isValidMove(target) {
-    const endId = Number(target.getAttribute('id')) || Number(target.parentNode.getAttribute('id'));
-    console.log(endId)
+    const endId = target.getAttribute('id') || target.parentNode.getAttribute('id');
     const piece = draggedEle.getAttribute('piece');
-    
+    // console.log(startID)
+    // console.log(endId)
+    // console.log(piece)
+
+
 
     switch(piece) {
 
         case 'pawn' :
             const startingRank = [2,7];
-            if(startingRank.includes(startID[1]))
-            console('valid mobe');
+            if(draggedEle.classList.contains('white')) {
+
+                if(
+                    (startingRank.includes(Number(startID[1])) && startID.charCodeAt(0) === endId.charCodeAt(0) && (Number(endId[1]) === Number(startID[1])+1 || Number(endId[1]) === Number(startID[1])+2)) || 
+                    (Number(endId[1]) === Number(startID[1])+1 && startID.charCodeAt(0) === endId.charCodeAt(0)) || 
+                    (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)+1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])+1) || 
+                    (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)-1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])+1)
+                ) {
+                    return true;
+                } else {
+                    false;
+                } 
+
+            } else if (draggedEle.classList.contains('black')) {
+
+                if(
+                    (startingRank.includes(Number(startID[1])) && startID.charCodeAt(0) === endId.charCodeAt(0) && (Number(endId[1]) === Number(startID[1])-1 || Number(endId[1]) === Number(startID[1])-2)) || 
+                    (Number(endId[1]) === Number(startID[1])-1 && startID.charCodeAt(0) === endId.charCodeAt(0)) ||
+                    (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)+1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])-1) || 
+                    (document.querySelector(`[id="${endId}"]`).firstChild && startID.charCodeAt(0)-1 === endId.charCodeAt(0) && Number(endId[1]) === Number(startID[1])-1)
+                ) {
+                    return true;
+                } else {
+                    false;
+                } 
+
+            }
             break;
 
     }
-
-
 }

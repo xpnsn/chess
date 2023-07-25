@@ -120,3 +120,12 @@ span {
       transform: translate3d(5px, 0, 0);
     }
 }
+
+#coordinate {
+    padding: 5px;
+    padding-left: 65px;
+    position: relative;
+    bottom: 25px;
+    color: #6eb1d6;
+    font-size: 20px;
+}
