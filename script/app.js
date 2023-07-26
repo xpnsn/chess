@@ -85,7 +85,7 @@ function dragDrop(i) {
     const opponent = currentPlayer === 'white' ? 'black' : 'white';
     const takenByOpponent = i.target?.classList.contains(opponent);
 
-    const valid = isValidMove(i.target);
+    const valid = isValidMove(i.target, opponent);
 
     if(taken && !takenByOpponent && (!valid || !correctMove)) {
         draggedEle.classList.add('shake')
@@ -121,12 +121,14 @@ function changePlayer() {
     }
 }
 
-function isValidMove(target) {
+function isValidMove(target, opponent) {
     const endId = target.getAttribute('id') || target.parentNode.getAttribute('id');
     const piece = draggedEle.getAttribute('piece');
     // console.log(startID)
     // console.log(endId)
-    // console.log(piece)
+    console.log(piece)
+
+    // console.log(document.querySelector(`[id="${endId}"]`)?.firstChild.classList.contains(opponent))
 
 
 
@@ -181,7 +183,7 @@ function isValidMove(target) {
             break;
 
         case 'bishop' :
-            if(bishopMove) {
+            if(bishopMove(startID, endId)) {
                 return true;
             } else {
                 return false;
@@ -190,41 +192,63 @@ function isValidMove(target) {
     }
 }
 
-const bishopMove = function(startID, endId) {
+// console.log(bishopMove)
+
+function bishopMove(startID, endId) {
+    let currentID;
+    let isValid = false;
     for(let i=1; i<8; i++) {
+        currentID = String.fromCharCode(startID.charCodeAt(0)+(1*i)) + (Number(startID[1])+(1*i));
         if(
-            (startID.charCodeAt(0)+(1*i) === endId.charCodeAt(0) && Number(startID[1])+(1*i) === Number(endId[1]))
+            (currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild)
         ) {
-            return true;
-        } else {
-            return false;
+            isValid = true;
+            break;
         }
     }
-    for(let i=1; i<8; i++) {
-        if(
-            (startID.charCodeAt(0)-(1*i) === endId.charCodeAt(0) && Number(startID[1])+(1*i) === Number(endId[1]))
-        ) {
-            return true;
-        } else {
-            return false;
+
+    if(!isValid) {
+
+        for(let i=1; i<8; i++) {
+            currentID = String.fromCharCode(startID.charCodeAt(0)-(1*i)) + (Number(startID[1])+(1*i));
+            console.log(currentID)
+            if(
+                (currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild)
+            ) {
+                isValid = true;
+                break;
+            }
         }
+
     }
-    for(let i=1; i<8; i++) {
-        if(
-            (startID.charCodeAt(0)+(1*i) === endId.charCodeAt(0) && Number(startID[1])-(1*i) === Number(endId[1]))
-        ) {
-            return true;
-        } else {
-            return false;
+
+    if(!isValid) {
+        
+        for(let i=1; i<8; i++) {
+            currentID = String.fromCharCode(startID.charCodeAt(0)+(1*i)) + (Number(startID[1])-(1*i));
+            if(
+                (currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild)
+            ) {
+                isValid = true;
+                break;
+            }
         }
+
     }
-    for(let i=1; i<8; i++) {
-        if(
-            (startID.charCodeAt(0)-(1*i) === endId.charCodeAt(0) && Number(startID[1])-(1*i) === Number(endId[1])) 
-        ) {
-            return true;
-        } else {
-            return false;
+
+    if(!isValid) {
+
+        for(let i=1; i<8; i++) {
+            currentID = String.fromCharCode(startID.charCodeAt(0)-(1*i)) + (Number(startID[1])-(1*i));
+            if(
+                (currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild) 
+            ) {
+                isValid = true;
+                break;
+            }
         }
+
     }
+
+    return isValid;
 }
