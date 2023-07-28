@@ -185,7 +185,7 @@ function isValidMove(target, opponent) {
             break;
 
         case 'bishop' :
-            if(bishopMove(startID, endId, opponent)) {
+            if(bishopMove(startID, endId)) {
                 return true;
             } else {
                 return false;
@@ -201,77 +201,13 @@ function isValidMove(target, opponent) {
             break;
 
         case 'queen' :
-            if(bishopMove(startID, endId, opponent) || rookMove (startID, endId)) {
+            if(bishopMove(startID, endId) || rookMove (startID, endId)) {
                 return true;
             } else {
                 return false;
             }
             break;
     }
-}
-
-// console.log(bishopMove)
-
-function bishopMove(startID, endId, opponent) {
-    console.log(opponent)
-    let currentID = startID;
-    let isValid = false;
-    for(let i=1; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-        currentID = String.fromCharCode(startID.charCodeAt(0)+(1*(i-1))) + (Number(startID[1])+(1*(i-1)));
-        if(
-            ((String.fromCharCode(startID.charCodeAt(0)+(1*i)) + (Number(startID[1])+(1*i))) === endId && !document.querySelector(`[id="${currentID}"]`).firstChild)
-        ) {
-            isValid = true;
-            break;
-        }
-    }
-
-    if(!isValid) {
-
-        for(let i=1; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-            currentID = (String.fromCharCode(startID.charCodeAt(0)-(1*(i-1))) + (Number(startID[1])+(1*(i-1))));
-            console.log(currentID)
-            if(
-                ((String.fromCharCode(startID.charCodeAt(0)-(1*i)) + (Number(startID[1])+(1*i))) === endId && !document.querySelector(`[id="${currentID}"]`).firstChild)
-            ) {
-                isValid = true;
-                break;
-            }
-        }
-
-    }
-
-    if(!isValid) {
-        
-        for(let i=1; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-            currentID = (String.fromCharCode(startID.charCodeAt(0)+(1*(i-1))) + (Number(startID[1])-(1*(i-1))));
-            console.log(currentID)
-            if(
-                ((String.fromCharCode(startID.charCodeAt(0)+(1*i)) + (Number(startID[1])-(1*i))) === endId && !document.querySelector(`[id="${currentID}"]`).firstChild)
-            ) {
-                isValid = true;
-                break;
-            }
-        }
-
-    }
-
-    if(!isValid) {
-
-        for(let i=1; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-            currentID = (String.fromCharCode(startID.charCodeAt(0)-(1*(i-1))) + (Number(startID[1])-(1*(i-1))));
-            console.log(currentID)
-            if(
-                ((String.fromCharCode(startID.charCodeAt(0)-(1*i)) + (Number(startID[1])-(1*i))) === endId && !document.querySelector(`[id="${currentID}"]`).firstChild) 
-            ) {
-                isValid = true;
-                break;
-            }
-        }
-
-    }
-
-    return isValid;
 }
 
 function rookMove(startID, endId) {
@@ -318,7 +254,119 @@ function rookMove(startID, endId) {
     return isValid;
 }
 
-function moveSound() {
-    let moveSFX = new Audio("/../miscellaneous/sounds/pieceMoveSound.mp3");
-    moveSFX.play();
+function bishopMove(startID, endId) {
+    let canMoveForward = true;
+    let currentID = startID
+    let bishopArray = [];
+    
+    for(let i=1; i<8 ; i++) {
+        currentID = String.fromCharCode(startID.charCodeAt(0)+i) + (Number(startID[1])+i);
+        if(canMoveForward) {
+            
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                bishopArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
+            }
+        }
+    }
+
+    canMoveForward = true;
+
+    for(let i=1; i<8 ; i++) {
+        currentID = String.fromCharCode(startID.charCodeAt(0)-i) + (Number(startID[1])+i);
+        if(canMoveForward) {
+            
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                bishopArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
+            }
+        }
+    }
+
+    canMoveForward = true;
+
+    for(let i=1; i<8 ; i++) {
+        currentID = String.fromCharCode(startID.charCodeAt(0)+i) + (Number(startID[1])-i);
+        if(canMoveForward) {
+            
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                bishopArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
+            }
+        }
+    }
+
+    canMoveForward = true;
+
+    for(let i=1; i<8 ; i++) {
+        currentID = String.fromCharCode(startID.charCodeAt(0)-i) + (Number(startID[1])-i);
+        if(canMoveForward) {
+            
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                bishopArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
+            }
+        }
+    }
+
+    console.log(bishopArray)
+
+    if(bishopArray.includes(endId)) {
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+function moveSound(piece) {
+    let pawnSound = new Audio("/../miscellaneous/sounds/pawn.mp3");
+    let knightSound = new Audio("/../miscellaneous/sounds/knight.mp3");
+    let bishopSound = new Audio("/../miscellaneous/sounds/bishop.mp3");
+    let rookSound = new Audio("/../miscellaneous/sounds/rook.mp3");
+    let queenSound = new Audio("/../miscellaneous/sounds/queen.mp3");
+    let kingSound = new Audio("/../miscellaneous/sounds/king.mp3");
+    let checkSound = new Audio("/../miscellaneous/sounds/check.mp3");
+    switch (piece) {
+
+        case 'pawn' :
+            pawnSound.play();
+            break;
+
+        case 'knight' :
+            knightSound.play();
+            break;
+
+        case 'bishop' :
+            bishopSound.play();
+            break;
+
+        case 'rook' :
+            rookSound.play();
+            break;
+
+        case 'queen' :
+            queenSound.play();
+            break;
+
+        case 'king' :
+            kingSound.play();
+            break;
+
+        case 'check' :
+            checkSound.play();
+            break;
+    }
 }
