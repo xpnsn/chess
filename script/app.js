@@ -85,7 +85,11 @@ function dragDrop(i) {
     const opponent = currentPlayer === 'white' ? 'black' : 'white';
     const takenByOpponent = i.target?.classList.contains(opponent);
 
-    const valid = isValidMove(i.target, opponent);
+    const piece = draggedEle.getAttribute('piece');
+
+    console.log(piece);
+
+    const valid = isValidMove(i.target);
 
     if(taken && !takenByOpponent && (!valid || !correctMove)) {
         draggedEle.classList.add('shake')
@@ -123,16 +127,10 @@ function changePlayer() {
     }
 }
 
-function isValidMove(target, opponent) {
+function isValidMove(target) {
+
     const endId = target.getAttribute('id') || target.parentNode.getAttribute('id');
     const piece = draggedEle.getAttribute('piece');
-    // console.log(startID)
-    // console.log(endId)
-    console.log(piece)
-
-    // console.log(document.querySelector(`[id="${endId}"]`)?.firstChild.classList.contains(opponent))
-
-
 
     switch(piece) {
 
@@ -211,47 +209,87 @@ function isValidMove(target, opponent) {
 }
 
 function rookMove(startID, endId) {
-    let currentID = startID;
-    let isValid = false;
-    for(let i=0; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
+    let currentID;
+    let canMoveForward = true;
+    const rookArray = [];
+    console.log(endId)
+
+    for(let i=1; i<8; i++) {
+
         currentID = String.fromCharCode(startID.charCodeAt(0)+i) + startID[1];
-        if(currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild) {
-            isValid = true;
-            break;
-        }
-    }
+        
+        if(canMoveForward) {
 
-    if(!isValid) {
-        for(let i=0; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-            currentID = String.fromCharCode(startID.charCodeAt(0)-i) + startID[1];
-            if(currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild) {
-                isValid = true;
-                break;
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                rookArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
             }
         }
     }
 
-    if(!isValid) {
-        for(let i=0; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-            currentID = startID[0] + (Number(startID[0])+i);
-            if(currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild) {
-                isValid = true;
-                break;
+    canMoveForward = true;
+
+    for(let i=1; i<8; i++) {
+
+        currentID = String.fromCharCode(startID.charCodeAt(0)-i) + startID[1];
+        
+        if(canMoveForward) {
+
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                rookArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
+            }
+        }
+    }
+    
+    canMoveForward = true;
+
+    for(let i=1; i<8; i++) {
+
+        currentID = startID[0] + (Number(startID[1])+i);
+        
+        if(canMoveForward) {
+
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                rookArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
             }
         }
     }
 
-    if(!isValid) {
-        for(let i=0; i<8 && 0 < Number(currentID[1]) < 9 && 96 < currentID.charCodeAt(0) < 105; i++) {
-            currentID = startID[0] + (Number(startID[0])-i);
-            if(currentID === endId && !document.querySelector(`[id="${currentID}"]`).firstChild) {
-                isValid = true;
-                break;
+    canMoveForward = true;
+
+    for(let i=1; i<8; i++) {
+
+        currentID = startID[0] + (Number(startID[1])-i);
+        
+        if(canMoveForward) {
+
+            if(Number(currentID[1]) < 9 && Number(currentID[1]) > 0 && currentID.charCodeAt(0) > 96 && currentID.charCodeAt(0) < 105) {
+            
+                rookArray.push(currentID);
+                if(document.querySelector(`[id="${currentID}"]`)?.firstChild) {
+                    canMoveForward = false;
+                }
             }
         }
     }
+    console.log(rookArray)
 
-    return isValid;
+    if(rookArray.includes(endId)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function bishopMove(startID, endId) {
@@ -321,7 +359,7 @@ function bishopMove(startID, endId) {
         }
     }
 
-    console.log(bishopArray)
+    // console.log(bishopArray)
 
     if(bishopArray.includes(endId)) {
         return true;
