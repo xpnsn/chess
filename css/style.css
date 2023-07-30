@@ -19,8 +19,9 @@ body{
     flex-wrap: wrap;
     height: 640px;
     width: 640px;
-    border: 3px solid #212c58;
+    /* border: 3px solid #212c58; */
     border-radius: 5px;
+    overflow: hidden;
 }
 
 .big-container{

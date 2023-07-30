@@ -104,13 +104,15 @@ function dragDrop(i) {
             i.target.parentNode.append(draggedEle);
             i.target.remove();
             changePlayer();
-            moveSound();
+            console.draggedEle
+            moveSound('taken');
             
         } else if(i.target.classList.contains('box')){
 
             i.target.append(draggedEle);
             changePlayer();
             moveSound();
+            moveSound('piece')
     
         }
         else if (taken){
@@ -200,6 +202,14 @@ function isValidMove(target) {
 
         case 'queen' :
             if(bishopMove(startID, endId) || rookMove (startID, endId)) {
+                return true;
+            } else {
+                return false;
+            }
+            break;
+        
+        case 'king' : 
+            if(kingMove) {
                 return true;
             } else {
                 return false;
@@ -369,42 +379,31 @@ function bishopMove(startID, endId) {
     
 }
 
-function moveSound(piece) {
-    let pawnSound = new Audio("/../miscellaneous/sounds/pawn.mp3");
-    let knightSound = new Audio("/../miscellaneous/sounds/knight.mp3");
-    let bishopSound = new Audio("/../miscellaneous/sounds/bishop.mp3");
-    let rookSound = new Audio("/../miscellaneous/sounds/rook.mp3");
-    let queenSound = new Audio("/../miscellaneous/sounds/queen.mp3");
-    let kingSound = new Audio("/../miscellaneous/sounds/king.mp3");
+function kingMove(startID, endId) {
+    // let currentID;
+
+    // for(let i=1; i<9; i++) {
+    //     currentID = startID[]
+    // }
+}
+
+function moveSound(arg) {
+    let pieceMoveSound = new Audio("/../miscellaneous/sounds/piece.mp3");
     let checkSound = new Audio("/../miscellaneous/sounds/check.mp3");
-    switch (piece) {
+    let takenSound = new Audio("/../miscellaneous/sounds/taken.mp3");
+    switch (arg) {
 
-        case 'pawn' :
-            pawnSound.play();
-            break;
-
-        case 'knight' :
-            knightSound.play();
-            break;
-
-        case 'bishop' :
-            bishopSound.play();
-            break;
-
-        case 'rook' :
-            rookSound.play();
-            break;
-
-        case 'queen' :
-            queenSound.play();
-            break;
-
-        case 'king' :
-            kingSound.play();
+        case 'piece' :
+            pieceMoveSound.play();
             break;
 
         case 'check' :
             checkSound.play();
             break;
+
+        case 'taken' :
+            takenSound.play();
+            break;
     }
 }
+
