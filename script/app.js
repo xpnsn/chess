@@ -380,11 +380,8 @@ function bishopMove(startID, endId) {
 }
 
 function kingMove(startID, endId) {
-    // let currentID;
+    const kingArray = [];
 
-    // for(let i=1; i<9; i++) {
-    //     currentID = startID[]
-    // }
 }
 
 function moveSound(arg) {
