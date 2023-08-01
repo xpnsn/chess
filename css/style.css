@@ -29,7 +29,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* margin: 65px; */
+    width: 60%;
     height: 100vh;
 }
 
@@ -78,16 +78,7 @@ path{
     background-color: #5416752f;
 }
 
-#player1 {
-    display: flex;
-    flex-direction: row-reverse;
-    height: 40px;
-    width: 640px;
-    /* justify-content: center; */
-    align-items: center;
-}
-
-#player2 {
+.player-info {
     display: flex;
     height: 40px;
     width: 640px;
